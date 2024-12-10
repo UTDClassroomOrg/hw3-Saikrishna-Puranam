@@ -1,4 +1,4 @@
-# Function to Calculate the Average of the First `k` Elements of an Integer List
+# **Function to Calculate the Average of the First `k` Elements of an Integer List**
 
 This function computes the average of the first `k` elements of an integer array `list`. The function ensures that:
 - The computation does not exceed the actual length of the array.
@@ -61,3 +61,66 @@ This function computes the average of the first `k` elements of an integer array
 | `k = list.length`          | `k = 3, list = [5, 5, 5]`    | `5`                |
 | `k = list.length + 1`      | `k = 3, list = [5, 5]`       | `5`                |
 | `k = -1`                   | `k = -1, list = [5, 5]`      | `0`                |
+
+---
+
+## **Error Analysis and Fixes**
+
+After running the test cases, the following errors were encountered:
+
+---
+
+### **Error 1: functionalAverageTest()**
+- **Input:** `k=3, list=[1, 2, 3, 4, 5]`
+- **Expected Output:** `2`
+- **Actual Output:** `ArrayIndexOutOfBoundsException`
+- **Cause:** The loop index was starting from `1` instead of `0` due to a faulty injection (`for (int i = 1; i < n; i++)`).
+- **Fix:** Change the loop back to start from `0`:
+    ```java
+    for (int i = 0; i < n; i++) {
+        average += list[i];
+    }
+    ```
+
+---
+
+### **Error 2: partitionValidAverageTest()**
+- **Input:** `k=2, list=[3, 6, 9]`
+- **Expected Output:** `4`
+- **Actual Output:** `0`
+- **Cause:** Faulty condition: `if (n >= 0)` instead of `if (n > 0)` led to incorrect bypassing of the averaging logic.
+- **Fix:** Revert the condition to:
+    ```java
+    if (n > 0) {
+        // Perform averaging
+    }
+    ```
+
+---
+
+
+### **Error 3: boundaryLengthAverageTest()**
+- **Input:** `k=3, list=[3, 3, 3]`
+- **Expected Output:** `3`
+- **Actual Output:** `0`
+- **Cause:** The `average` variable was not initialized properly in some cases due to faulty injection (`int average = -1;`).
+- **Fix:** Reinitialize `average` to `0`:
+    ```java
+    int average = 0;
+    ```
+
+---
+
+
+## **Code Coverage Analysis**
+
+Using **EclEmma**, the code coverage for the test cases achieved **100% branch and line coverage**. This included:
+- The `if` condition in the function.
+- The loop for summing the elements.
+- Edge cases for `k=0`, `k<0`, `k > list.length`, and an empty list.
+![WhatsApp Image 2024-12-09 at 11 28 34 PM](https://github.com/user-attachments/assets/1cdb676a-c238-4c2b-bd95-9ae79c4deaaf)
+
+
+
+---
+
